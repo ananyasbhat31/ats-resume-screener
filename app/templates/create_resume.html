@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Create Your Resume</h2>
+
+<form method="POST">
+  <div class="mb-3">
+    <label for="name" class="form-label">Full Name</label>
+    <input type="text" class="form-control" id="name" name="name" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email Address</label>
+    <input type="email" class="form-control" id="email" name="email" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone Number</label>
+    <input type="text" class="form-control" id="phone" name="phone" />
+  </div>
+
+  <div class="mb-3">
+    <label for="summary" class="form-label">Summary</label>
+    <textarea class="form-control" id="summary" name="summary" rows="3"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="experience" class="form-label">Experience</label>
+    <textarea class="form-control" id="experience" name="experience" rows="4"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="education" class="form-label">Education</label>
+    <textarea class="form-control" id="education" name="education" rows="3"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="skills" class="form-label">Skills</label>
+    <textarea class="form-control" id="skills" name="skills" rows="3"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-success">Download Resume</button>
+</form>
+{% endblock %}

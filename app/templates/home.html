@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Resume Screener</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  <div class="mb-3">
+    <label for="resume" class="form-label">Upload Resume </label>
+    <input class="form-control" type="file" id="resume" name="resume" accept=".txt,.docx,.pdf" required />
+  </div>
+
+  <div class="mb-3">
+    <label for="job_description" class="form-label">Paste Job Description</label>
+    <textarea class="form-control" id="job_description" name="job_description" rows="6" placeholder="Paste job description here..." required></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Analyze Resume</button>
+</form>
+
+{% if results %}
+<hr/>
+<h3>Results</h3>
+<p><strong>ATS Score:</strong> {{ results.score }}%</p>
+
+<p><strong>Matched Keywords:</strong> 
+  {% if results.matched_keywords %}
+    {{ results.matched_keywords | join(', ') }}
+  {% else %}
+    None
+  {% endif %}
+</p>
+
+<p><strong>Missing Keywords:</strong>
+  {% if results.missing_keywords %}
+    {{ results.missing_keywords | join(', ') }}
+  {% else %}
+    None
+  {% endif %}
+</p>
+
+<p><strong>Improvement Suggestions:</strong></p>
+<ul>
+  {% for suggestion in results.improvement_suggestions %}
+    <li>{{ suggestion }}</li>
+  {% endfor %}
+</ul>
+
+<p><strong>Pro Tips:</strong></p>
+<ul>
+  {% for tip in results.pro_tips %}
+    <li>{{ tip }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

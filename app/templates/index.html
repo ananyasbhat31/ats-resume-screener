@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Resume Screener</title>
+    
+    <!-- External CSS & Fonts -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom Styling -->
+    <style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: url("C:\Users\Shripati Bhat\Downloads\bg.png") no-repeat center center fixed;
+        background-size: cover;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    .custom-card {
+        background: rgba(255, 255, 255, 0.95); /* semi-transparent white */
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-top: 3rem;
+    }
+
+    .resume-tips {
+        background-color: rgba(232, 240, 254, 0.85); /* light blue, slightly transparent */
+        padding: 1rem;
+        border-radius: 12px;
+        margin-top: 2rem;
+    }
+
+    .custom-btn {
+        border-radius: 30px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+    }
+
+    .dark-mode {
+        background-color: #181818 !important;
+        color: #eee !important;
+    }
+
+    .dark-mode .custom-card {
+        background-color: rgba(34, 34, 34, 0.95); /* dark semi-transparent */
+        color: #eee;
+    }
+
+    .dark-mode .form-control,
+    .dark-mode .form-select {
+        background-color: #333;
+        color: #eee;
+        border-color: #555;
+    }
+
+    .result-section {
+        margin-top: 2rem;
+    }
+
+    .download-btn {
+        margin-top: 1.5rem;
+    }
+
+    .form-label {
+        font-weight: 600;
+    }
+</style>
+
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">ATS Screener</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/resume">Create Resume</a></li>
+                <li class="nav-item"><a class="nav-link" href="/templates">Templates</a></li>
+                <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                <li class="nav-item">
+                    <button class="btn btn-outline-light btn-sm" onclick="toggleTheme()">🌙</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<img src="app\static\images\background.png" style="max-width: 300px;">
+
+<!-- Main Container -->
+<div class="container">
+    <div class="custom-card" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="text-center mb-4">ATS Resume Screener</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="resume" class="form-label">Upload Resume</label>
+                <input type="file" class="form-control" id="resume" name="resume" accept=".pdf,.docx,.txt" required>
+            </div>
+            <div class="mb-3">
+                <label for="job_description" class="form-label">Paste Job Description</label>
+                <textarea class="form-control" id="job_description" name="job_description" rows="5" required></textarea>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary custom-btn">Evaluate Resume</button>
+            </div>
+        </form>
+
+        <!-- Resume Tips -->
+        <div class="resume-tips">
+            <h5>Resume Writing Tips:</h5>
+            <ul>
+                <li>Keep it concise and relevant to the job.</li>
+                <li>Use clear section headings and bullet points.</li>
+                <li>Incorporate keywords from the job description.</li>
+                <li>Quantify achievements (e.g., increased sales by 20%).</li>
+                <li>Stick to a clean, ATS-friendly format.</li>
+            </ul>
+        </div>
+
+        <!-- Results Section -->
+        {% if results %}
+        <div class="result-section">
+            <h4 class="mt-4">Evaluation Results</h4>
+            <div class="mb-2"><strong>Score:</strong> {{ results.score }}%</div>
+            <div class="mb-2"><strong>Matched Keywords:</strong> {{ results.matched_keywords }}</div>
+            <div class="mb-2"><strong>Missing Keywords:</strong> {{ results.missing_keywords }}</div>
+            <div class="mb-2"><strong>Suggestions:</strong></div>
+            <ul>
+                {% for suggestion in results.improvement_suggestions %}
+                <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+            <div class="mb-2"><strong>Pro Tips:</strong></div>
+            <ul>
+                {% for tip in results.pro_tips %}
+                <li>{{ tip }}</li>
+                {% endfor %}
+            </ul>
+            <div class="mb-2"><strong>Templates:</strong></div>
+            <ul>
+                {% for template in results.templates %}
+                <li>{{ template }}</li>
+                {% endfor %}
+            </ul>
+            <div class="text-center download-btn">
+                <a href="/download_resume" class="btn btn-success">Download ATS-Friendly Resume</a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init();
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        if (html.getAttribute('data-theme') === 'dark') {
+            html.setAttribute('data-theme', 'light');
+            document.body.classList.remove('dark-mode');
+        } else {
+            html.setAttribute('data-theme', 'dark');
+            document.body.classList.add('dark-mode');
+        }
+    }
+</script>
+
+</body>
+</html>

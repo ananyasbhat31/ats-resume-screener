@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Choose a Resume Template</h2>
+<form method="post" action="{{ url_for('choose_template') }}">
+  <label><input type="radio" name="template" value="modern" required> Modern</label><br>
+  <label><input type="radio" name="template" value="classic"> Classic</label><br>
+  <label><input type="radio" name="template" value="minimal"> Minimal</label><br>
+  <button type="submit">Preview</button>
+</form>
+{% endblock %}

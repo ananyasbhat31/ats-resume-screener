@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+  body {
+    background-image: url('{{ url_for("static", filename="images/bg.jpg") }}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  .card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border: none;
+    border-radius: 10px;
+  }
+</style>
+
+<div class="container py-4">
+  <h2 class="text-center text-white mb-4">Choose Your Resume Template</h2>
+  <div class="row">
+    {% for template in templates %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <img src="{{ url_for('static', filename='images/' + template.preview) }}" 
+               class="card-img-top" alt="Preview">
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ template.filename.replace('.docx', '').capitalize() }}</h5>
+            <a href="{{ url_for('download_template', filename=template.filename) }}" 
+               class="btn btn-primary btn-sm mb-2" download>Download</a>
+            <!--<a href="{{ url_for('step1') }}" 
+               class="btn btn-outline-success btn-sm">Edit Template</a> --->
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

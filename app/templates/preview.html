@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Resume Preview</h2>
+<p><strong>Name:</strong> {{ data.name }}</p>
+<p><strong>Email:</strong> {{ data.email }}</p>
+<p><strong>Phone:</strong> {{ data.phone }}</p>
+<p><strong>Summary:</strong><br>{{ data.summary }}</p>
+<p><strong>Experience:</strong><br>{{ data.experience }}</p>
+<p><strong>Education:</strong><br>{{ data.education }}</p>
+<p><strong>Skills:</strong><br>{{ data.skills }}</p>
+
+<form method="post" action="{{ url_for('download_resume') }}">
+  <input type="hidden" name="template" value="{{ data.template }}">
+  <button type="submit">Download Resume</button>
+</form>
+{% endblock %}
